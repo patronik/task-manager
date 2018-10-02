@@ -3,13 +3,13 @@ const loadingDOM = document.querySelector('.loading-text')
 const formDOM = document.querySelector('.task-form')
 const taskInputDOM = document.querySelector('.task-input')
 const formAlertDOM = document.querySelector('.form-alert')
-// Load tasks from /api/tasks
+// Load tasks from /api/task
 const showTasks = async () => {
   loadingDOM.style.visibility = 'visible'
   try {
     const {
       data: { tasks },
-    } = await axios.get('/api/v1/tasks')
+    } = await axios.get('/api/v1/task')
     if (tasks.length < 1) {
       tasksDOM.innerHTML = '<h5 class="empty-list">No tasks in your list</h5>'
       loadingDOM.style.visibility = 'hidden'
@@ -46,7 +46,7 @@ const showTasks = async () => {
 
 showTasks()
 
-// delete task /api/tasks/:id
+// delete task /api/task/:id
 
 tasksDOM.addEventListener('click', async (e) => {
   const el = e.target
@@ -54,7 +54,7 @@ tasksDOM.addEventListener('click', async (e) => {
     loadingDOM.style.visibility = 'visible'
     const id = el.parentElement.dataset.id
     try {
-      await axios.delete(`/api/v1/tasks/${id}`)
+      await axios.delete(`/api/v1/task/${id}`)
       showTasks()
     } catch (error) {
       console.log(error)
@@ -70,7 +70,7 @@ formDOM.addEventListener('submit', async (e) => {
   const name = taskInputDOM.value
 
   try {
-    await axios.post('/api/v1/tasks', { name })
+    await axios.post('/api/v1/task', { name })
     showTasks()
     taskInputDOM.value = ''
     formAlertDOM.style.display = 'block'
